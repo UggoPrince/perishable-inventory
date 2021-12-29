@@ -1,0 +1,4 @@
+src/config/database.js
+src/database/migrations
+src/database/seeders
+dist
