@@ -13,7 +13,8 @@
     "migrate": "npx sequelize-cli db:migrate",
     "drop-tables": "npx sequelize-cli db:migrate:undo:all",
     "test-db": "npm-run-all drop-tables migrate",
-    "test": "set NODE_ENV=test&& npm run test-db &&nyc --reporter=text mocha --require ts-node/register 'tests/**/**spec.ts' --timeout 480000"
+    "test": "set NODE_ENV=test&& npm run test-db &&nyc --reporter=text mocha --require ts-node/register 'tests/**/**spec.ts' --timeout 480000",
+    "coverage": "nyc report --reporter=lcov --reporter=text-lcov | coveralls"
   },
   "repository": {
     "type": "git",
@@ -51,6 +52,7 @@
     "@typescript-eslint/parser": "^5.8.1",
     "chai": "^4.3.4",
     "chai-http": "^4.3.0",
+    "coveralls": "^3.1.1",
     "eslint": "^8.5.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-airbnb-typescript": "^16.1.0",
