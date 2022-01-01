@@ -1,0 +1,66 @@
+components:
+  schemas:
+    CreateItem:
+      type: object
+      properties:
+        quantity:
+          type: integer
+          example: '20'
+        expiry:
+          type: integer
+          example: '30000'
+paths:
+  /item/{item}/add:
+    post:
+      tags:
+        - Item
+      description: save item
+      operationId: saveItem
+      parameters:
+        - name: item
+          in: path
+          required: true
+          description: name if the item you want to save
+          schema:
+            type : string
+            example: sugar
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/CreateItem'
+        required: true
+      produces:
+        - application/json
+      responses:
+        201:
+          description: Successfully saved the item
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: '201'
+                  message:
+                    type: string
+                    description: status message
+                    example: "Email updated and verification mail sent."
+                  data:
+                    type: object
+        422:
+          description: wrong parameter
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    description: 422 error status code
+                    example: '422'
+                  message:
+                    type: string
+                    description: status message
+                    example: 'Quantity is invalid'
