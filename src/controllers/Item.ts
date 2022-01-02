@@ -50,4 +50,21 @@ export default class Item {
     }
     return success(res, 200, message, { quantity, validTill });
   }
+
+  /**
+   * This method sells an item and reduce its quantity
+   * @async
+   * @method sellItem
+   * @param {object} req request object
+   * @param {object} res response object
+   * @param {object} response
+   */
+  static async sellItem(req: Request, res: Response) {
+    const {
+      body: { quantity },
+      params: { item },
+    } = req;
+    ItemService.sellItem(quantity, item);
+    return success(res, 200, 'Success selling item.', {});
+  }
 }

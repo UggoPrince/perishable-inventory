@@ -16,7 +16,7 @@ app.get('/', (req: Request, res: Response) => {
 });
 
 if (!isEnvProd()) {
-  app.get('/api/v2', (req: Request, res: Response) => {
+  app.get('/api/v1', (req: Request, res: Response) => {
     res.send(
       `Welcome to TBH API version 2. <br/>  
       <a href="${getApiUrl}/api/v1/docs/#/">Documentation</a>`,
