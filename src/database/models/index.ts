@@ -54,4 +54,4 @@ sequelize // checks if the items table exist
         });
     }
   });
-export default Item;
+export { Item, sequelize };

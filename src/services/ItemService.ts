@@ -1,4 +1,5 @@
-import Item from '../database/models';
+import { Op } from 'sequelize';
+import { Item, sequelize } from '../database/models';
 
 /**
  * ItemService class handles item database activities
@@ -14,6 +15,28 @@ export default class ItemService {
    */
   static createItem(body: any) {
     const item = Item.create(body);
+    return item;
+  }
+
+  /**
+   * get item.
+   * @async
+   * @method getItem
+   * @param {string} name - name of the item
+   * @returns {object} Response
+   */
+  static getItem(name: string) {
+    const item = Item.findAll({
+      attributes: [
+        [sequelize.fn('sum', sequelize.col('quantity')), 'quantity'],
+        [sequelize.fn('max', sequelize.col('expiry')), 'validTill'],
+      ],
+      where: { name, expiry: { [Op.gt]: Date.now() } },
+    }).then((result: any) => {
+      const [itemQE] = result;
+      const { dataValues } = itemQE;
+      return dataValues;
+    });
     return item;
   }
 }
