@@ -9,6 +9,15 @@ components:
         expiry:
           type: integer
           example: '30000'
+    Item:
+      type: object
+      properties:
+        quantity:
+          type: integer
+          example: 20
+        validTill:
+          type: integer
+          example: 1641127730096
 paths:
   /item/{item}/add:
     post:
@@ -46,7 +55,7 @@ paths:
                   message:
                     type: string
                     description: status message
-                    example: "Email updated and verification mail sent."
+                    example: "Item successfully added."
                   data:
                     type: object
         422:
@@ -64,3 +73,51 @@ paths:
                     type: string
                     description: status message
                     example: 'Quantity is invalid'
+  /item/{item}/quantity:
+    get:
+      tags:
+        - Item
+      description: get item quantity and expiry
+      operationId: getItem
+      parameters:
+        - name: item
+          in: path
+          required: true
+          description: name if the item you want to retrieve
+          schema:
+            type : string
+            example: sugar
+      produces:
+        - application/json
+      responses:
+        200:
+          description: Successfully retrieved the item
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    description: status message
+                    example: "Successfully retrieved sugar item."
+                  data:
+                    $ref: '#/components/schemas/Item'
+        422:
+          description: wrong parameter
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    description: 422 error status code
+                    example: 422
+                  message:
+                    type: string
+                    description: status message
+                    example: 'Item is invalid'
